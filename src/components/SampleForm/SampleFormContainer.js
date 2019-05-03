@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ContactForm from './ContactForm';
+import SampleForm from './SampleForm';
 
 class ContactContainer extends Component {
   constructor(props, context) {
@@ -24,19 +24,11 @@ class ContactContainer extends Component {
   }
 
   render() {
-    const { name, email, subject, message } = this.state;
     return (
       <div className="container">
         <div className="row">
           <div className="col-xs-12 col-md-6 offset-md-3">
-            <ContactForm
-              name={name}
-              email={email}
-              subject={subject}
-              messsage={message}
-              handleChange={this.handleChange}
-              handleSubmit={this.handleSubmit}
-            />
+            <SampleForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
           </div>
         </div>
       </div>
