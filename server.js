@@ -5,13 +5,21 @@ const morgan = require('morgan');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const path = require('path');
+const mongoose = require('mongoose');
 const middleware = require('./middleware/middleware');
+
+const { NODE_ENV, PORT, MONGO_URI } = process.env;
 
 const app = express();
 
-if (process.env.NODE_ENV === 'production') {
+if (NODE_ENV === 'production') {
   app.use(middleware.ensureHttps);
 }
+
+mongoose
+  .connect(MONGO_URI)
+  .then(() => console.log('Mongo connected...'))
+  .catch(err => console.log('Mongo err: ', err));
 
 // Middleware
 app.use(morgan('dev'));
@@ -25,8 +33,8 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, './dist/index.html'));
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+const port = PORT || 3001;
+app.listen(port, () => {
   // eslint-disable-next-line no-console
-  console.log(`🔥 Server is listening on PORT:${PORT}`);
+  console.log(`🔥 Server is listening on PORT:${port}`);
 });
