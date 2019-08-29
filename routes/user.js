@@ -30,7 +30,21 @@ const addUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await User.findById(id);
+    await deletedUser.remove();
+    return res.json(`${deletedUser.firstName} ${deletedUser.lastName} has been deleted`);
+  } catch (err) {
+    err.statusCode = 404;
+    err.message = 'User not found';
+    return errorHandler(err, addUser.name, res);
+  }
+};
+
 router.get('/api/users', getUsers);
 router.post('/api/users', addUser);
+router.delete('/api/users/:id', deleteUser);
 
 module.exports = router;
