@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const middleware = require('./middleware/middleware');
+const userRoutes = require('./routes/user');
 
 const { NODE_ENV, PORT, MONGO_URI } = process.env;
 
@@ -17,7 +18,7 @@ if (NODE_ENV === 'production') {
 }
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI, { useNewUrlParser: true })
   .then(() => console.log('Mongo connected...'))
   .catch(err => console.log('Mongo err: ', err));
 
@@ -25,6 +26,8 @@ mongoose
 app.use(morgan('dev'));
 app.use(compression());
 app.use(bodyParser.json());
+
+app.use(userRoutes);
 
 app.use(express.static(path.join(__dirname, './dist')));
 
