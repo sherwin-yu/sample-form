@@ -30,6 +30,27 @@ const addUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          ...req.body,
+          updated: Date.now()
+        }
+      },
+      { new: true }
+    );
+    return res.json(updatedUser);
+  } catch (err) {
+    err.statusCode = 404;
+    err.message = 'User not found';
+    return errorHandler(err, addUser.name, res);
+  }
+};
+
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -45,6 +66,7 @@ const deleteUser = async (req, res) => {
 
 router.get('/api/users', getUsers);
 router.post('/api/users', addUser);
+router.put('/api/users/:id', updateUser);
 router.delete('/api/users/:id', deleteUser);
 
 module.exports = router;
