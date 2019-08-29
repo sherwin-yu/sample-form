@@ -6,7 +6,7 @@ const router = express.Router();
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().sort({ created: -1 });
     return res.json(users);
   } catch (err) {
     err.statusCode = 500;
