@@ -16,7 +16,9 @@ const SampleForm = ({ handleChange, handleSubmit }) => (
     <Title>Sample Form</Title>
     <Form onSubmit={handleSubmit}>
       <StyledTextInput
+        id="firstName"
         name="firstName"
+        type="text"
         labelText="First Name"
         helperText="Enter First name"
         onChange={handleChange}
@@ -25,6 +27,7 @@ const SampleForm = ({ handleChange, handleSubmit }) => (
       <StyledTextInput
         id="lastName"
         name="lastName"
+        type="text"
         labelText="Last Name"
         helperText="Enter Last name"
         onChange={handleChange}
@@ -37,7 +40,7 @@ const SampleForm = ({ handleChange, handleSubmit }) => (
         labelText="Email"
         helperText="Enter email"
         onChange={handleChange}
-        require
+        required
       />
       <Button type="submit">Submit</Button>
     </Form>
