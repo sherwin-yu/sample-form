@@ -21,7 +21,9 @@ const Users = ({ users }) => (
       headers={[
         { header: 'First Name', key: 'firstName' },
         { header: 'Last Name', key: 'lastName' },
-        { header: 'Email', key: 'email' }
+        { header: 'Email', key: 'email' },
+        { header: 'Created', key: 'created' },
+        { header: 'Updated', key: 'updated' }
       ]}
       isSortable
       useZebraStyles
@@ -39,7 +41,7 @@ const Users = ({ users }) => (
               {rows.map(row => (
                 <TableRow key={row.id}>
                   {row.cells.map(cell => (
-                    <TableCell key={cell.value}>{cell.value}</TableCell>
+                    <TableCell key={cell.id}>{cell.value}</TableCell>
                   ))}
                 </TableRow>
               ))}

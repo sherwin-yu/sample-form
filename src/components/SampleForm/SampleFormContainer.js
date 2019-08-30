@@ -32,14 +32,14 @@ class FormContainer extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const { newUser } = this.state;
+    const { newUser, users } = this.state;
     const response = await fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser)
     });
     const data = await response.json();
-    console.log('newUser', data);
+    this.setState({ users: [{ id: data._id, ...data }, ...users] });
   }
 
   render() {
