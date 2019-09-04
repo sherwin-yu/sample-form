@@ -1,5 +1,14 @@
 import React from 'react';
-import { DataTable } from 'carbon-components-react';
+import {
+  DataTable,
+  OverflowMenu,
+  OverflowMenuItem,
+  ComposedModal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from 'carbon-components-react';
+// import { OverflowMenuVertical24 } from '@carbon/icons-react';
 import styled from 'styled-components';
 
 const { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, TableHeader } = DataTable;
@@ -13,7 +22,7 @@ const Title = styled.div`
   margin-bottom: 10px;
 `;
 
-const Users = ({ users }) => (
+const Users = ({ users, deleteModalState, toggleDeleteModal }) => (
   <div>
     <Title>Users</Title>
     <DataTable
@@ -22,8 +31,9 @@ const Users = ({ users }) => (
         { header: 'First Name', key: 'firstName' },
         { header: 'Last Name', key: 'lastName' },
         { header: 'Email', key: 'email' },
-        { header: 'Created', key: 'created' },
-        { header: 'Updated', key: 'updated' }
+        // { header: 'Created', key: 'created' },
+        // { header: 'Updated', key: 'updated' },
+        { header: 'Actions', key: 'delete' }
       ]}
       isSortable
       useZebraStyles
@@ -32,17 +42,31 @@ const Users = ({ users }) => (
           <Table {...getTableProps()}>
             <TableHead>
               <TableRow>
-                {headers.map(header => (
-                  <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
-                ))}
+                {headers.map(header => {
+                  if (header.key === 'delete') return <TableHeader key={header.key} isSortable={false} />;
+                  return <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>;
+                })}
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map(row => (
                 <TableRow key={row.id}>
-                  {row.cells.map(cell => (
-                    <TableCell key={cell.id}>{cell.value}</TableCell>
-                  ))}
+                  {row.cells.map(cell => {
+                    if (cell.info.header === 'delete')
+                      return (
+                        <OverflowMenu
+                          overflowMenuProps={{
+                            direction: 'bottom',
+                            ariaLabel: 'Actions',
+                            iconDescription: ''
+                          }}
+                        >
+                          <OverflowMenuItem itemText="Update" />
+                          <OverflowMenuItem itemText="Delete" onClick={() => toggleDeleteModal(true)} />
+                        </OverflowMenu>
+                      );
+                    return <TableCell key={cell.id}>{cell.value}</TableCell>;
+                  })}
                 </TableRow>
               ))}
             </TableBody>
@@ -50,6 +74,13 @@ const Users = ({ users }) => (
         </StyledTableContainer>
       )}
     />
+    <ComposedModal open={deleteModalState} onClose={() => toggleDeleteModal(false)}>
+      <ModalHeader />
+      <ModalBody>
+        <p>Are you sure you want to delete this user?</p>
+      </ModalBody>
+      <ModalFooter />
+    </ComposedModal>
   </div>
 );
 
