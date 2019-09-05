@@ -6,7 +6,8 @@ import {
   ComposedModal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  Button
 } from 'carbon-components-react';
 // import { OverflowMenuVertical24 } from '@carbon/icons-react';
 import styled from 'styled-components';
@@ -22,7 +23,7 @@ const Title = styled.div`
   margin-bottom: 10px;
 `;
 
-const Users = ({ users, deleteModalState, toggleDeleteModal }) => (
+const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => (
   <div>
     <Title>Users</Title>
     <DataTable
@@ -31,8 +32,8 @@ const Users = ({ users, deleteModalState, toggleDeleteModal }) => (
         { header: 'First Name', key: 'firstName' },
         { header: 'Last Name', key: 'lastName' },
         { header: 'Email', key: 'email' },
-        // { header: 'Created', key: 'created' },
-        // { header: 'Updated', key: 'updated' },
+        { header: 'Created', key: 'created' },
+        { header: 'Updated', key: 'updated' },
         { header: 'Actions', key: 'delete' }
       ]}
       isSortable
@@ -54,16 +55,12 @@ const Users = ({ users, deleteModalState, toggleDeleteModal }) => (
                   {row.cells.map(cell => {
                     if (cell.info.header === 'delete')
                       return (
-                        <OverflowMenu
-                          overflowMenuProps={{
-                            direction: 'bottom',
-                            ariaLabel: 'Actions',
-                            iconDescription: ''
-                          }}
-                        >
-                          <OverflowMenuItem itemText="Update" />
-                          <OverflowMenuItem itemText="Delete" onClick={() => toggleDeleteModal(true)} />
-                        </OverflowMenu>
+                        <TableCell key={cell.id}>
+                          <OverflowMenu>
+                            <OverflowMenuItem itemText="Update" />
+                            <OverflowMenuItem itemText="Delete" onClick={() => toggleDeleteModal(true, row)} />
+                          </OverflowMenu>
+                        </TableCell>
                       );
                     return <TableCell key={cell.id}>{cell.value}</TableCell>;
                   })}
@@ -75,11 +72,20 @@ const Users = ({ users, deleteModalState, toggleDeleteModal }) => (
       )}
     />
     <ComposedModal open={deleteModalState} onClose={() => toggleDeleteModal(false)}>
-      <ModalHeader />
+      <ModalHeader buttonOnClick={() => console.log('hey')}>
+        <Title>Removing User</Title>
+      </ModalHeader>
       <ModalBody>
         <p>Are you sure you want to delete this user?</p>
       </ModalBody>
-      <ModalFooter />
+      <ModalFooter>
+        <Button kind="secondary" onClick={() => toggleDeleteModal(false)}>
+          Cancel
+        </Button>
+        <Button kind="danger" onClick={() => handleDelete()}>
+          Delete
+        </Button>
+      </ModalFooter>
     </ComposedModal>
   </div>
 );
