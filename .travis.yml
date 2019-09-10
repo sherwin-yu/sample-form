@@ -3,6 +3,9 @@ node_js: node
 branches:
   only:
     - master
+cache:
+  directories:
+    - node_modules
 install:
   - npm install
   - npm run build
@@ -14,5 +17,6 @@ deploy:
   region: us-east-1
   app: sample-form
   env: sample-form
+  bucket_name: $BUCKET_NAME
   on:
     repo: sherwin-yu/sample-form
