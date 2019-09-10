@@ -9,7 +9,6 @@ import {
   ModalFooter,
   Button
 } from 'carbon-components-react';
-// import { OverflowMenuVertical24 } from '@carbon/icons-react';
 import styled from 'styled-components';
 
 const { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, TableHeader } = DataTable;
