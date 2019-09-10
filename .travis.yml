@@ -15,7 +15,7 @@ deploy:
   secret_access_key:
     secure: $SECRET_ACCESS_KEY
   region: us-east-1
-  app: sample-form
+  app: sample-form-dev
   env: sample-form
   bucket_name: $BUCKET_NAME
   on:
