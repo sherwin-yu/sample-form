@@ -2,6 +2,10 @@
 
 Sample form using Carbon Design React Components and relational database, MongoDB
 
+# Deployment
+
+Deployed to AWS Elastic Beanstalk
+
 ## **Setup**
 
 1. Include the `.env` file from sherwin

@@ -1,0 +1,18 @@
+language: node_js
+node_js: node
+branches:
+  only:
+    - master
+install:
+  - npm install
+  - npm run build
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $ACCESS_KEY_ID
+  secret_access_key:
+    secure: $SECRET_ACCESS_KEY
+  region: us-east-1
+  app: sample-form
+  env: sample-form
+  on:
+    repo: sherwin-yu/sample-form
