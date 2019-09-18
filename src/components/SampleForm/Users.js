@@ -22,7 +22,7 @@ const Title = styled.div`
   margin-bottom: 10px;
 `;
 
-const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => (
+const Users = ({ users, updateModalState, toggleUpdateModal, deleteModalState, toggleDeleteModal, handleDelete }) => (
   <div>
     <Title>Users</Title>
     <DataTable
@@ -56,7 +56,7 @@ const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => 
                       return (
                         <TableCell key={cell.id}>
                           <OverflowMenu>
-                            <OverflowMenuItem itemText="Update" />
+                            <OverflowMenuItem itemText="Update" onClick={() => toggleUpdateModal(true, row)} />
                             <OverflowMenuItem itemText="Delete" onClick={() => toggleDeleteModal(true, row)} />
                           </OverflowMenu>
                         </TableCell>
@@ -70,6 +70,22 @@ const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => 
         </StyledTableContainer>
       )}
     />
+    <ComposedModal open={updateModalState} onClose={() => toggleUpdateModal(false)}>
+      <ModalHeader buttonOnClick={() => console.log('hey')}>
+        <Title>Updating User</Title>
+      </ModalHeader>
+      <ModalBody>
+        <p>Are you sure you want to update this user?</p>
+      </ModalBody>
+      <ModalFooter>
+        <Button kind="secondary" onClick={() => toggleUpdateModal(false)}>
+          Cancel
+        </Button>
+        <Button kind="danger" onClick={() => handleDelete()}>
+          Delete
+        </Button>
+      </ModalFooter>
+    </ComposedModal>
     <ComposedModal open={deleteModalState} onClose={() => toggleDeleteModal(false)}>
       <ModalHeader buttonOnClick={() => console.log('hey')}>
         <Title>Removing User</Title>

@@ -17,10 +17,10 @@ if (NODE_ENV === 'production') {
   app.use(middleware.ensureHttps);
 }
 
-console.log('MONGO URI22222', MONGO_URI);
+// console.log('MONGO URI22222', MONGO_URI);
 
 mongoose
-  .connect('MONGO_URI', { useNewUrlParser: true })
+  .connect(encodeURI(MONGO_URI), { useNewUrlParser: true })
   .then(() => console.log('Mongo connected...'))
   .catch(err => console.log('Mongo err: ', err));
 
