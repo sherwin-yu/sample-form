@@ -8,14 +8,11 @@ class FormContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
     this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
     this.state = {
       users: [],
       newUser: {},
-      updateModalState: false,
       deleteModalState: false,
-      updatedUser: {},
       deletedUser: {}
     };
   }
@@ -59,25 +56,12 @@ class FormContainer extends Component {
     this.setState({ deleteModalState: false, users: users.filter(user => user.id !== deletedUser.id) });
   }
 
-  async handleUpdate() {
-    const { updatedUser } = this.state;
-    const response = await fetch(`api/users/${updatedUser.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' }
-    });
-    await response.json();
-  }
-
-  toggleUpdateModal(bool, updatedUser) {
-    this.setState({ updateModalState: bool, updatedUser });
-  }
-
   toggleDeleteModal(bool, deletedUser) {
     this.setState({ deleteModalState: bool, deletedUser });
   }
 
   render() {
-    const { users, updateModalState, deleteModalState } = this.state;
+    const { users, deleteModalState } = this.state;
     return (
       <div className="bx--grid">
         <div className="bx--row">
@@ -85,9 +69,7 @@ class FormContainer extends Component {
             <SampleForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
             <Users
               users={users}
-              updateModalState={updateModalState}
               deleteModalState={deleteModalState}
-              toggleUpdateModal={this.toggleUpdateModal}
               toggleDeleteModal={this.toggleDeleteModal}
               handleDelete={this.handleDelete}
             />
