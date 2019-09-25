@@ -1,6 +1,6 @@
 # Sample Form
 
-Sample form using Carbon Design React Components and relational database, MongoDB
+Sample form using Carbon Design React Components and NoSQL database, MongoDB
 
 # Deployment
 
