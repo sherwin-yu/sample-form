@@ -79,7 +79,7 @@ const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => 
       )}
     />
     <ComposedModal open={deleteModalState} onClose={() => toggleDeleteModal(false)}>
-      <ModalHeader buttonOnClick={() => console.log('hey')}>
+      <ModalHeader buttonOnClick={() => toggleDeleteModal(false)}>
         <Title>Removing User</Title>
       </ModalHeader>
       <ModalBody>

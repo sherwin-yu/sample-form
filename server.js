@@ -17,12 +17,10 @@ if (NODE_ENV === 'production') {
   app.use(middleware.ensureHttps);
 }
 
-// console.log('MONGO URI22222', MONGO_URI);
-
 mongoose
   .connect(encodeURI(MONGO_URI), { useNewUrlParser: true })
-  .then(() => console.log('Mongo connected...'))
-  .catch(err => console.log('Mongo err: ', err));
+  .then(() => console.log(`🌩  Mongo is connected...`)) // eslint-disable-line no-console
+  .catch(err => console.log(`Mongo err: `, err)); // eslint-disable-line no-console
 
 // Middleware
 app.use(morgan('dev'));
