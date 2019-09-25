@@ -9,6 +9,7 @@ const StyledTextInput = styled(TextInput)`
 const Title = styled.div`
   font-size: 28px;
   margin-bottom: 10px;
+  margin-top: 30px;
 `;
 
 const SampleForm = ({ handleChange, handleSubmit }) => (

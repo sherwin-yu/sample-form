@@ -10,6 +10,7 @@ import {
   Button
 } from 'carbon-components-react';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
 const { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, TableHeader } = DataTable;
 
@@ -20,10 +21,11 @@ const StyledTableContainer = styled(TableContainer)`
 const Title = styled.div`
   font-size: 28px;
   margin-bottom: 10px;
+  margin-top: 30px;
 `;
 
 const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => (
-  <div>
+  <>
     <Title>Users</Title>
     <DataTable
       rows={users}
@@ -52,15 +54,22 @@ const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => 
               {rows.map(row => (
                 <TableRow key={row.id}>
                   {row.cells.map(cell => {
-                    if (cell.info.header === 'delete')
-                      return (
-                        <TableCell key={cell.id}>
-                          <OverflowMenu>
-                            <OverflowMenuItem itemText="Delete" onClick={() => toggleDeleteModal(true, row)} />
-                          </OverflowMenu>
-                        </TableCell>
-                      );
-                    return <TableCell key={cell.id}>{cell.value}</TableCell>;
+                    switch (cell.info.header) {
+                      case 'delete':
+                        return (
+                          <TableCell key={cell.id}>
+                            <OverflowMenu>
+                              <OverflowMenuItem itemText="Delete" onClick={() => toggleDeleteModal(true, row)} />
+                            </OverflowMenu>
+                          </TableCell>
+                        );
+                      case 'created':
+                        return <TableCell key={cell.id}>{dayjs(cell.value).format('MM-DD-YYYY HH:mm')}</TableCell>;
+                      case 'updated':
+                        return <TableCell key={cell.id}>{dayjs(cell.value).format('MM-DD-YYYY HH:mm')}</TableCell>;
+                      default:
+                        return <TableCell key={cell.id}>{cell.value}</TableCell>;
+                    }
                   })}
                 </TableRow>
               ))}
@@ -85,7 +94,7 @@ const Users = ({ users, deleteModalState, toggleDeleteModal, handleDelete }) => 
         </Button>
       </ModalFooter>
     </ComposedModal>
-  </div>
+  </>
 );
 
 export default Users;
