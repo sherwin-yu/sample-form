@@ -5,10 +5,8 @@ import Users from './Users';
 class FormContainer extends Component {
   constructor(props, context) {
     super(props, context);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
     this.state = {
       users: [],
       newUser: {},
@@ -27,12 +25,16 @@ class FormContainer extends Component {
     this.setState({ users: formattedUsers });
   }
 
-  handleChange(event) {
+  handleChange = event => {
     event.preventDefault();
     const { newUser } = this.state;
     const { name, value } = event.target;
     this.setState({ newUser: { ...newUser, [name]: value } }); // eslint-disable-line react/no-unused-state
-  }
+  };
+
+  toggleDeleteModal = (bool, deletedUser) => {
+    this.setState({ deleteModalState: bool, deletedUser });
+  };
 
   async handleSubmit(event) {
     event.preventDefault();
@@ -54,10 +56,6 @@ class FormContainer extends Component {
     });
     await response.json();
     this.setState({ deleteModalState: false, users: users.filter(user => user.id !== deletedUser.id) });
-  }
-
-  toggleDeleteModal(bool, deletedUser) {
-    this.setState({ deleteModalState: bool, deletedUser });
   }
 
   render() {
